@@ -1,0 +1,95 @@
+Creating and editing files with vim
+===============================================
+
+vi +21 xx.yml(jump to line21)
+vi ~/vimrc
+	autocmd FileType yaml setlocal ai ts=2 sw=2 et
+	set cursorcolumn
+
+Command Mode
+============
+Mode used for navigation, cut, copy, paste. Undo and redo
+
+Navigation
+----------
+Up, Dn, Left, Right
+k,  j,  h,    l
+^ - Beginning of line
+$ - End of line
+G - End of document
+gg - First line of document
+w - move to the next word
+b - move cursor to the beginning of the previous word
+( - move cursor to the current or previous sentence
+) - move cursor to the beginning of the next sentence
+{ - move cursor to the current or previous paragraph
+} - move cursor to the beginning of the next paragraph
+
+
+/search str - search a string
+n - continue with search down
+N - continue with search Up
+
+
+
+
+Text manipulation
+-----------------
+dd - Cut a line
+yy or Y - Copy a line (Yank)
+y$ - copy till end of line
+yiw - copy a word (exclude whitespace) (5yiw copy 5 words)
+yaw - copy a word (include whitespace) (3yaw copy 5 words)
+u - Undo
+Ctrl-R - Redo
+cw - replace word by deleting and get editor in insert mode
+c$ - replace till end of line by deleting and get editor in insert mode
+r - replace character
+p - Paste after cursor
+P - Paste before cursor
+
+
+Insert mode
+===========
+i - insert before current cursor position
+I - Move to start of the current line and switch to insert mode
+A - Move to end of the current line and switch to insert mode
+o - open new line below the current one and switch to insert mode
+O - open a new line above the current one  and switch to insert mode
+R - replace mode
+
+
+Visual Mode
+===========
+v - visually select text. Use Lt Rt arrow keys
+V - visually selects a line. Use Up Dn arrow keys 
+Ctrl-v - Visual block mode
+
+While in this mode use the following
+y - copy
+d - cut
+p - paste
+c - cut and get editor in insert mode
+
+
+Ex mode
+=======
+:wq - write and quit
+:x  - save file and quit
+:w  - save and remain in editor
+:w <filename> - save under a different filename
+:q - quit
+:q! - quit without saving changes
+:%s/search str/replace str/g	; Globally replace
+:%s/search str/Replace str/gc	; Global replace with confirmation
+:%s/\<cat\>/dog/gc		; Replace where full word is found
+
+Indent and tab space
+=======
+add following to ~/.vimrc
+set cursorcolumn
+set tabstop=2
+autocmd FileType yaml setlocal et ts=2 sw=2 et
+set number
+:5,10s/^/  /  - set indent from line5 to 10
+:5,10s/   // - remove beginning 4 spaces
