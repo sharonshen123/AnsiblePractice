@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+    # show message if vg is not exist
+    - fail:
+        msg: sample_vg not exist
+      when: "'sample_vg' not in ansible_lvm.vgs"
+    # show vg size
+    - fail:
+        msg: not enough size for lv
+      when: ansible_lvm.sample_vg.size_g < 1
+      # ansible_devices.sdb.partitions.sdb1.size
+      
+    - lvov:
+        lv: sample_lv
+        vg: sample_vg
+        size: 1g
+      when: "'sample_lv' not in ansible_lvm.lvs"
+
+      test vg first
+      ansible all -m setup -a 'filter=ansible_lvm'
+      ansible all -m setup -a 'filter=ansible_devices'

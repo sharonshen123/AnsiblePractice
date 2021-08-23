@@ -1,0 +1,29 @@
+---
+- hosts: database
+  become: yes
+  vars: 
+    custom_pkg: example-motd
+  tasks:
+    - package_facts:
+        manager: auto
+    - debug: 
+        var: ansible_packages[custom_pkg]
+      when: custom_pkg in ansible_packages
+    - yum_repository:
+        name: mysql80-community #unique repository ID
+        file: mysql-community # configuration store in /etc/yum.repos.d/mysql-community.repo. Default to value of 'name'
+        description: “MySQL 8.0 YUM Repo”
+        baseurl: http://repo.mysql.com/yum/mysql-8.0-community/el/8/x86_64/.
+        gpgcheck: yes
+        enabled: yes
+    - rmp_key:
+        key: http://repo.mysql.com/RPM-GPG-KEY-mysql
+        state: present
+    - yum:
+        name: "{{ custom_pkg}}"
+        state: present
+    - package_facts:
+        manager: auto
+    - dubug: 
+        var: ansible_packages[custom_motd]
+      when: custom_pkg in ansible_packages

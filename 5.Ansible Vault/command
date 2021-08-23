@@ -1,0 +1,25 @@
+1. download file and encrypt it
+wget http://example.com/secret.yml -O secret.yml
+
+
+vi secret.yml
+user_password: devops
+database_password: devops
+
+echo 'devops' > pass # password for secret.yml
+
+ansible-vault encrypt secret.yml --vault-password-file=pass
+ansible-vault edit secret.yml --vault-password-file=pass
+#rekey password
+echo 'root' > newpass
+ansible-vault rekey secret.yml --vault-password-file=pass --new-vault-password-file=newpass
+cp pass oldpass
+cp newpass pass
+
+ansible-playbook site.yml --vault-password-file=pass
+ansible-playbook site.yml --ask-vault-pass
+ansible-playbook site.yml 
+
+add in ansible.cfg
+vault_password_file = /path/to/vault_password_file
+

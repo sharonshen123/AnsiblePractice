@@ -1,0 +1,6 @@
+– multiple LVM actions are required on all of the inventory, such as creating the partition, the VG, LV and finally the filesystem
+– let’s say that nodes setup is inconsistent, that is some nodes don’t have the extra disk, while others have it, but it’s too small for the required LV size, display message such as “no sdb here” or “not enough space for the LV, thus we are creating a smaller one”.
+
+run ansible all -m setup -a 'filter=ansible_lvm' -u root
+ansible all -m setup -a 'filter=ansible_devices' -u root
+ansible all -m parted -a 'device=/dev/sdb unit=MiB'
