@@ -1,0 +1,12 @@
+sudo yum install ansible
+sudo yum install adduser
+sudo adduser automation
+
+check inventory
+ansible-inventory --list all
+check servera in inventory1 file
+ansible servera -i inventory1 --list-hosts
+ansible all -i inventory1 --list-hosts
+ansible '*.example.*,!*.lab.example.com' -i inventory1 --list-hosts
+ansible 'prod,webservers,*.lab*' -i inventory1 --list-hosts
+ansible 'db,&london' -i inventory1 --list-hosts
